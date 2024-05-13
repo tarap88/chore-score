@@ -1,3 +1,5 @@
+using chore_score.Repositories;
+using chore_score.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
 
-namespace chore-score;
+namespace chore_score;
 
 public class Startup
 {
@@ -26,13 +28,16 @@ public class Startup
     services.AddControllers();
     services.AddSwaggerGen(c =>
     {
-      c.SwaggerDoc("v1", new OpenApiInfo { Title = "chore-score", Version = "v1" });
+      c.SwaggerDoc("v1", new OpenApiInfo { Title = "chore_score", Version = "v1" });
     });
     services.AddSingleton<Auth0Provider>();
     services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
     services.AddScoped<AccountsRepository>();
     services.AddScoped<AccountService>();
+
+    services.AddScoped<ChoresService>();
+    services.AddScoped<ChoresRepository>();
   }
 
   private void ConfigureCors(IServiceCollection services)
@@ -41,14 +46,14 @@ public class Startup
     {
       options.AddPolicy("CorsDevPolicy", builder =>
             {
-              builder
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins(new string[]{
+            builder
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials()
+              .WithOrigins(new string[]{
                 "http://localhost:8080", "http://localhost:8081"
-            });
-            });
+          });
+          });
     });
   }
 
@@ -80,7 +85,7 @@ public class Startup
     {
       app.UseDeveloperExceptionPage();
       app.UseSwagger();
-      app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "chore-score"));
+      app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "chore_score"));
       app.UseCors("CorsDevPolicy");
     }
 
@@ -102,4 +107,3 @@ public class Startup
     });
   }
 }
-

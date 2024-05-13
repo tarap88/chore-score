@@ -1,3 +1,4 @@
+-- Active: 1715613936922@@127.0.0.1@3306@graceful_minotaur_511618_db
 CREATE TABLE IF NOT EXISTS accounts (
     id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
@@ -13,3 +14,12 @@ CREATE TABLE chores (
     description VARCHAR(255),
     isComplete BOOLEAN DEFAULT false
 );
+
+INSERT INTO
+    chores (name, description)
+VALUES (
+        "Walk the raccoons",
+        "Don't go to the dog park, we are banned for life."
+    );
+
+SELECT * FROM chores;
