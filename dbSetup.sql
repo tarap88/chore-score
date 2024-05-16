@@ -18,8 +18,12 @@ CREATE TABLE chores (
 INSERT INTO
     chores (name, description)
 VALUES (
-        "Walk the raccoons",
-        "Don't go to the dog park, we are banned for life."
-    );
+        "Vacuum",
+        "Vacuum the carpet in all of the rooms"
+    ),
+    (
+        "Do the laundry",
+        "Fold the clean laundry"
+    ),
 
 SELECT * FROM chores;
